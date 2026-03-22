@@ -1,0 +1,30 @@
+# Xcode
+build/
+DerivedData/
+*.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+*.xcscmblueprint
+*.xccheckout
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# CocoaPods
+Pods/
+
+# fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+# IPA / Archive
+*.ipa
+*.xcarchive
+Payload/
+
+# IDE
+.idea/
+.vscode/
