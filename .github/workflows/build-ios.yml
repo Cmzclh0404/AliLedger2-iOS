@@ -41,73 +41,14 @@ jobs:
           cd "$(dirname "$APP_PATH")"
           zip -r "$GITHUB_WORKSPACE/AliLedger2.zip" AliLedger2.app
 
-      - name: Build Signed IPA with Automatic Signing
-        env:
-          APPLE_ID: ${{ secrets.APPLE_ID }}
-          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+      - name: Create unsigned IPA
         run: |
-          # Create export options plist for automatic signing
-          cat > ExportOptions.plist << 'PLIST'
-          <?xml version="1.0" encoding="UTF-8"?>
-          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-          <plist version="1.0">
-          <dict>
-              <key>method</key>
-              <string>development</string>
-              <key>signingStyle</key>
-              <string>automatic</string>
-              <key>teamID</key>
-              <string></string>
-              <key>uploadSymbols</key>
-              <false/>
-          </dict>
-          </plist>
-          PLIST
-
-          # Try to build with automatic signing
-          xcodebuild archive \
-            -project AliLedger2.xcodeproj \
-            -scheme AliLedger2 \
-            -destination 'generic/platform=iOS' \
-            -configuration Release \
-            -archivePath build/AliLedger2.xcarchive \
-            CODE_SIGN_STYLE=Automatic \
-            DEVELOPMENT_TEAM="" \
-            -allowProvisioningUpdates \
-            2>&1 | tee archive_output.txt || true
-
-          # Check if archive succeeded
-          if [ -d "build/AliLedger2.xcarchive" ]; then
-            echo "Archive succeeded, attempting export..."
-            xcodebuild -exportArchive \
-              -archivePath build/AliLedger2.xcarchive \
-              -exportPath build/export \
-              -exportOptionsPlist ExportOptions.plist \
-              -allowProvisioningUpdates \
-              2>&1 | tee export_output.txt || true
-
-            # Find and package the signed IPA
-            SIGNED_IPA=$(find build/export -name "*.ipa" | head -1)
-            if [ -n "$SIGNED_IPA" ]; then
-              cp "$SIGNED_IPA" "$GITHUB_WORKSPACE/AliLedger2-signed.ipa"
-              echo "Signed IPA created successfully!"
-            else
-              echo "Export did not produce IPA, creating from archive..."
-              mkdir -p Payload
-              cp -r "build/AliLedger2.xcarchive/Products/Applications/AliLedger2.app" Payload/
-              zip -r "$GITHUB_WORKSPACE/AliLedger2-unsigned.ipa" Payload
-              rm -rf Payload
-            fi
-          else
-            echo "Archive failed, creating unsigned IPA from simulator build..."
-            APP_PATH=$(find build/Build/Products -name "AliLedger2.app" -type d | head -1)
-            if [ -n "$APP_PATH" ]; then
-              mkdir -p Payload
-              cp -r "$APP_PATH" Payload/
-              zip -r "$GITHUB_WORKSPACE/AliLedger2-unsigned.ipa" Payload
-              rm -rf Payload
-            fi
-          fi
+          APP_PATH=$(find build/Build/Products -name "AliLedger2.app" -type d | head -1)
+          echo "App found at: $APP_PATH"
+          mkdir -p Payload
+          cp -r "$APP_PATH" Payload/
+          zip -r "$GITHUB_WORKSPACE/AliLedger2.ipa" Payload
+          rm -rf Payload
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
@@ -116,8 +57,5 @@ jobs:
           name: AliLedger2-iOS
           path: |
             AliLedger2.zip
-            AliLedger2-signed.ipa
-            AliLedger2-unsigned.ipa
-            archive_output.txt
-            export_output.txt
+            AliLedger2.ipa
           if-no-files-found: warn
