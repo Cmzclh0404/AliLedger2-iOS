@@ -23,7 +23,6 @@
 		A20000010000000000000004 /* VisionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionService.swift; sourceTree = "<group>"; };
 		A20000010000000000000005 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		A20000010000000000000006 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		A20000010000000000000007 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A20000010000000000000008 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A30000010000000000000001 /* AliLedger2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AliLedger2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -56,7 +55,6 @@
 				A20000010000000000000004 /* VisionService.swift */,
 				A20000010000000000000005 /* index.html */,
 				A20000010000000000000006 /* Assets.xcassets */,
-				A20000010000000000000007 /* LaunchScreen.storyboard */,
 				A20000010000000000000008 /* Info.plist */,
 			);
 			path = AliLedger2;
@@ -277,7 +275,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AliLedger2/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen = {BackgroundColorName = systemBackgroundColor;};
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -304,7 +301,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AliLedger2/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen = {BackgroundColorName = systemBackgroundColor;};
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
