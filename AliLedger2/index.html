@@ -56,7 +56,7 @@
     .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #0f172a; opacity: .85; }
     .pages { flex: 1; position: relative; overflow: hidden; }
     .page {
-      position: absolute; inset: 0; overflow-y: auto; padding: 8px 18px 108px; display: none;
+      position: absolute; inset: 0; overflow-y: auto; padding: env(safe-area-inset-top, 8px) 18px 108px; display: none;
       scroll-behavior: smooth;
     }
     .page.active { display: block; }
