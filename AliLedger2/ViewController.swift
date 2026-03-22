@@ -64,6 +64,7 @@ class ViewController: UIViewController, WKUIDelegate, WKScriptMessageHandler,
 
     // MARK: - WKUIDelegate — 文件选择（相册/相机）
 
+    @available(iOS 18.4, *)
     func webView(
         _ webView: WKWebView,
         runOpenPanelWith parameters: WKOpenPanelParameters,
