@@ -13,7 +13,7 @@
 		A10000010000000000000004 /* VisionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000010000000000000004 /* VisionService.swift */; };
 		A10000010000000000000005 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = A20000010000000000000005 /* index.html */; };
 		A10000010000000000000006 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A20000010000000000000006 /* Assets.xcassets */; };
-		A10000010000000000000007 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A20000010000000000000007 /* LaunchScreen.storyboard */; };
+		/* LaunchScreen.storyboard removed - using UILaunchScreen instead */
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -131,7 +131,6 @@
 			files = (
 				A10000010000000000000005 /* index.html in Resources */,
 				A10000010000000000000006 /* Assets.xcassets in Resources */,
-				A10000010000000000000007 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,7 +277,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AliLedger2/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchScreen = {BackgroundColorName = systemBackgroundColor;};
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -305,7 +304,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AliLedger2/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchScreen = {BackgroundColorName = systemBackgroundColor;};
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
