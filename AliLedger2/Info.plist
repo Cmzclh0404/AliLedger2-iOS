@@ -5,7 +5,7 @@
     <key>CFBundleDevelopmentRegion</key>
     <string>zh-CN</string>
     <key>CFBundleDisplayName</key>
-    <string>拍照记账</string>
+    <string>码上有米</string>
     <key>CFBundleExecutable</key>
     <string>$(EXECUTABLE_NAME)</string>
     <key>CFBundleIdentifier</key>

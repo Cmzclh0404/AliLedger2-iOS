@@ -22,16 +22,17 @@ jobs:
           fi
           xcodebuild -version
 
-      - name: Build for Simulator (no code signing needed)
+      - name: Build for Device (unsigned, for Sideloadly)
         run: |
           xcodebuild build \
             -project AliLedger2.xcodeproj \
             -scheme AliLedger2 \
-            -destination 'generic/platform=iOS Simulator' \
+            -destination 'generic/platform=iOS' \
             -configuration Release \
             CODE_SIGN_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGNING_ALLOWED=NO \
+            ARCHS=arm64 \
             -derivedDataPath build
 
       - name: Package app as ZIP

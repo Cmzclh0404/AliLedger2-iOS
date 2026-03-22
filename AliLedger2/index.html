@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>拍照记账</title>
+  <title>码上有米</title>
   <style>
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     :root {
@@ -286,7 +286,7 @@
           <section class="page active" data-page="home">
             <div class="topbar">
               <div>
-                <div class="title">拍照记账</div>
+                <div class="title">码上有米</div>
                 <div class="subtext" id="greetingText">今天也把账记清楚一点</div>
               </div>
               <button class="icon-btn" id="notifBtn">🔔</button>
@@ -1382,7 +1382,7 @@
       $('#clearDataBtn').onclick = () => openDialog('清空全部数据？', '会清空所有记录、识别历史和筛选条件。', () => {
         state.records = []; state.ocrHistory = []; state.filters = { q:'', categoryId:'all', start:'', end:'' }; saveState(); renderAll(); showToast('已清空');
       });
-      $('#aboutBtn').onclick = () => showToast('AI拍照记账 v1.0');
+      $('#aboutBtn').onclick = () => showToast('码上有米 v1.0');
       $('#exportBtn').onclick = () => showToast('导出功能即将上线');
       $('#cameraHelpBtn').onclick = () => showToast('建议对准完整小票，确保金额与时间区域清晰');
       $('#openCameraBtn').onclick = () => $('#photoInput').click();
