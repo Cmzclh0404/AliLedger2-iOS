@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>码上有米 · iOS版下载</title>
+  <style>
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html, body { margin: 0; padding: 0; font-family: Inter, PingFang SC, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    body {
+      background:
+        radial-gradient(circle at 20% 0%, rgba(88,140,255,.28), transparent 28%),
+        radial-gradient(circle at 100% 20%, rgba(72,226,196,.18), transparent 30%),
+        linear-gradient(180deg, #eef5ff 0%, #f6f8fc 40%, #ffffff 100%);
+      color: #111827;
+      overflow-x: hidden;
+    }
+    .page { max-width: 430px; margin: 0 auto; position: relative; min-height: 100vh; }
+    .noise {
+      position: fixed; inset: 0; pointer-events: none; opacity: .05;
+      background-image: radial-gradient(#000 0.4px, transparent 0.4px);
+      background-size: 10px 10px;
+    }
+    .hero {
+      position: relative; padding: 24px 20px 8px;
+    }
+    .floating-orb {
+      position: absolute; border-radius: 999px; filter: blur(22px); opacity: .7; z-index: 0;
+      animation: drift 7s ease-in-out infinite;
+    }
+    .orb-1 { width: 120px; height: 120px; top: 30px; right: -20px; background: rgba(22,119,255,.25); }
+    .orb-2 { width: 84px; height: 84px; top: 180px; left: -18px; background: rgba(19,194,194,.2); animation-delay: -2s; }
+    @keyframes drift { 0%,100% { transform: translateY(0) translateX(0); } 50% { transform: translateY(-12px) translateX(8px); } }
+    .topbar {
+      display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 2;
+      margin-bottom: 18px;
+    }
+    .brand {
+      display: inline-flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 999px;
+      background: rgba(255,255,255,.78); border: 1px solid rgba(17,24,39,.06); box-shadow: 0 12px 30px rgba(15,23,42,.08);
+      backdrop-filter: blur(12px);
+    }
+    .brand-logo {
+      width: 34px; height: 34px; border-radius: 12px; display: grid; place-items: center; font-size: 18px;
+      background: linear-gradient(180deg, #1677ff, #65a3ff); color: #fff; box-shadow: 0 8px 18px rgba(22,119,255,.28);
+    }
+    .brand-name { font-size: 14px; font-weight: 800; }
+    .badge {
+      padding: 9px 12px; border-radius: 999px; background: rgba(255,255,255,.78); font-size: 12px; font-weight: 700;
+      color: #1677ff; border: 1px solid rgba(22,119,255,.12); box-shadow: 0 12px 30px rgba(15,23,42,.06);
+    }
+    .headline {
+      position: relative; z-index: 2; margin-top: 10px;
+    }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 999px;
+      background: rgba(22,119,255,.08); color: #1677ff; font-size: 12px; font-weight: 800;
+    }
+    h1 {
+      margin: 14px 0 12px; font-size: 40px; line-height: 1.06; letter-spacing: -0.04em; font-weight: 900;
+    }
+    .gradient-text {
+      background: linear-gradient(90deg, #1677ff 0%, #5b8cff 45%, #13c2c2 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .lead {
+      font-size: 15px; line-height: 1.7; color: #5b6474; max-width: 360px;
+    }
+    .cta-row { display: flex; gap: 12px; margin-top: 18px; flex-wrap: wrap; }
+    .btn {
+      border: none; cursor: pointer; min-height: 50px; padding: 0 18px; border-radius: 16px; font-weight: 800; font-size: 14px;
+      box-shadow: 0 16px 32px rgba(15,23,42,.08); transition: .18s ease;
+    }
+    .btn:active { transform: scale(.97); }
+    .btn-primary { background: linear-gradient(180deg, #1677ff, #5a9cff); color: white; }
+    .btn-secondary { background: rgba(255,255,255,.9); color: #111827; border: 1px solid rgba(17,24,39,.08); }
+    .phone-wrap {
+      position: relative; z-index: 2; margin-top: 28px; display: flex; justify-content: center;
+    }
+    .phone {
+      width: 312px; height: 642px; border-radius: 38px; padding: 10px; background: linear-gradient(180deg, #f7fbff, #f1f5fb);
+      border: 1px solid rgba(255,255,255,.85); box-shadow: 0 30px 70px rgba(15,23,42,.16), inset 0 0 0 1px rgba(255,255,255,.9);
+      transform: perspective(1200px) rotateX(10deg);
+    }
+    .screen {
+      width: 100%; height: 100%; border-radius: 30px; overflow: hidden; position: relative; background: linear-gradient(180deg, #eff5ff, #ffffff);
+      border: 1px solid rgba(17,24,39,.06);
+    }
+    .island {
+      position: absolute; top: 10px; left: 50%; transform: translateX(-50%); width: 124px; height: 28px; border-radius: 999px; background: #090d16; z-index: 4;
+    }
+    .mock-content { padding: 48px 16px 16px; }
+    .mock-card {
+      background: rgba(255,255,255,.92); border-radius: 24px; padding: 16px; box-shadow: 0 12px 30px rgba(15,23,42,.08); border: 1px solid rgba(17,24,39,.05);
+    }
+    .hero-card {
+      background: linear-gradient(140deg, #1677ff, #6aa6ff 70%, #85d5ff 100%); color: #fff;
+      position: relative; overflow: hidden;
+    }
+    .hero-card::after {
+      content: ""; position: absolute; right: -20px; top: -20px; width: 120px; height: 120px; border-radius: 999px; background: rgba(255,255,255,.18);
+    }
+    .mock-title { font-size: 14px; opacity: .9; }
+    .mock-amount { font-size: 34px; font-weight: 900; margin-top: 8px; }
+    .mini-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 12px; }
+    .mini-cell {
+      background: rgba(255,255,255,.12); border-radius: 18px; padding: 12px 8px; text-align: center; border: 1px solid rgba(255,255,255,.12);
+    }
+    .mini-cell .v { font-size: 18px; font-weight: 900; }
+    .mini-cell .k { font-size: 11px; margin-top: 4px; opacity: .9; }
+    .mock-section { margin-top: 14px; }
+    .section-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .section-head .t { font-size: 15px; font-weight: 800; }
+    .chips { display: flex; gap: 8px; flex-wrap: wrap; }
+    .chip {
+      padding: 8px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; background: #f6f9ff; color: #4063a7; border: 1px solid rgba(17,24,39,.05);
+    }
+    .receipt-flow { display: grid; gap: 10px; }
+    .flow-step {
+      display: flex; gap: 12px; align-items: center; background: rgba(255,255,255,.94); border-radius: 20px; padding: 14px; box-shadow: 0 8px 24px rgba(15,23,42,.05);
+    }
+    .flow-icon {
+      width: 42px; height: 42px; border-radius: 14px; display: grid; place-items: center; font-size: 18px; color: #fff;
+      background: linear-gradient(180deg, #1677ff, #4b96ff);
+    }
+    .flow-main { flex: 1; }
+    .flow-name { font-size: 14px; font-weight: 800; }
+    .flow-desc { font-size: 12px; color: #667085; margin-top: 4px; }
+    .scan-card {
+      margin-top: 12px; padding: 16px; border-radius: 22px; background: linear-gradient(180deg, #f7fbff, #edf5ff); border: 1px solid rgba(17,24,39,.05);
+      position: relative; overflow: hidden;
+    }
+    .scan-box {
+      height: 152px; border-radius: 18px; border: 2px dashed #b4cdfd; background: linear-gradient(180deg, #ddebff, #f5f9ff);
+      display: grid; place-items: center; position: relative; overflow: hidden;
+    }
+    .scan-line {
+      position: absolute; left: 12px; right: 12px; top: 12px; height: 2px; background: #1677ff; box-shadow: 0 0 14px rgba(22,119,255,.65);
+      animation: scan 2.2s linear infinite;
+    }
+    @keyframes scan { 0% { top: 12px; } 50% { top: calc(100% - 12px); } 100% { top: 12px; } }
+    .ocr-result {
+      margin-top: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    }
+    .ocr-item {
+      padding: 12px; border-radius: 16px; background: #fff; border: 1px solid rgba(17,24,39,.05);
+    }
+    .ocr-item .k { font-size: 11px; color: #6b7280; }
+    .ocr-item .v { font-size: 16px; font-weight: 800; margin-top: 6px; }
+    .section {
+      padding: 34px 20px 0;
+    }
+    .section h2 {
+      margin: 0 0 10px; font-size: 28px; line-height: 1.15; letter-spacing: -0.03em;
+    }
+    .section p.lead2 {
+      margin: 0; color: #667085; line-height: 1.75; font-size: 14px;
+    }
+    .feature-grid {
+      margin-top: 18px; display: grid; gap: 12px;
+    }
+    .feature-card {
+      background: rgba(255,255,255,.9); border: 1px solid rgba(17,24,39,.05); border-radius: 24px; padding: 18px; box-shadow: 0 14px 34px rgba(15,23,42,.06);
+    }
+    .feature-top { display: flex; align-items: center; gap: 12px; }
+    .feature-icon {
+      width: 46px; height: 46px; border-radius: 16px; display: grid; place-items: center; font-size: 20px; color: #fff;
+      background: linear-gradient(180deg, #1677ff, #6aa6ff);
+    }
+    .feature-title { font-size: 16px; font-weight: 900; }
+    .feature-desc { margin-top: 10px; color: #667085; line-height: 1.7; font-size: 13px; }
+    .compare {
+      margin-top: 18px; background: #0f172a; color: #fff; border-radius: 28px; padding: 20px; overflow: hidden; position: relative;
+    }
+    .compare::after {
+      content: ""; position: absolute; right: -40px; bottom: -40px; width: 140px; height: 140px; border-radius: 999px; background: rgba(255,255,255,.08);
+    }
+    .compare h3 { margin: 0 0 14px; font-size: 20px; }
+    .vs-row { display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; align-items: stretch; }
+    .vs-card {
+      background: rgba(255,255,255,.06); border-radius: 20px; padding: 16px; border: 1px solid rgba(255,255,255,.08);
+    }
+    .vs-label { font-size: 12px; color: rgba(255,255,255,.75); font-weight: 700; }
+    .vs-main { margin-top: 8px; font-size: 14px; line-height: 1.7; }
+    .vs-badge {
+      width: 42px; height: 42px; border-radius: 999px; display: grid; place-items: center; margin: auto; font-weight: 900;
+      background: linear-gradient(180deg, #1677ff, #13c2c2);
+    }
+    .highlight-list { margin-top: 18px; display: grid; gap: 10px; }
+    .highlight-item {
+      display: flex; gap: 12px; align-items: flex-start; padding: 14px; border-radius: 18px; background: rgba(255,255,255,.92); border: 1px solid rgba(17,24,39,.05);
+    }
+    .dot { width: 10px; height: 10px; border-radius: 999px; background: #1677ff; margin-top: 7px; }
+    .quote-box {
+      margin-top: 20px; border-radius: 26px; padding: 24px 20px; background: linear-gradient(140deg, #f8fbff, #eef5ff); border: 1px solid rgba(17,24,39,.05);
+      text-align: center;
+    }
+    .quote-box .big { font-size: 26px; line-height: 1.35; font-weight: 900; letter-spacing: -0.03em; }
+    .quote-box .sub { margin-top: 10px; font-size: 14px; color: #667085; }
+    .bottom-cta {
+      padding: 32px 20px 42px; text-align: center;
+    }
+    .download {
+      width: 100%; max-width: 390px; min-height: 56px; border-radius: 18px; border: none; cursor: pointer;
+      background: linear-gradient(180deg, #1677ff, #5d9bff); color: #fff; font-size: 16px; font-weight: 900;
+      box-shadow: 0 18px 36px rgba(22,119,255,.24);
+    }
+    .tiny { margin-top: 12px; color: #8c95a4; font-size: 12px; }
+    .float-ticket {
+      position: absolute; right: 8px; top: 380px; z-index: 3; width: 122px; padding: 12px; border-radius: 18px; background: rgba(255,255,255,.92);
+      border: 1px solid rgba(17,24,39,.06); box-shadow: 0 16px 38px rgba(15,23,42,.10); transform: rotate(8deg);
+      animation: bob 4s ease-in-out infinite;
+    }
+    .float-ticket .t1 { font-size: 11px; color: #6b7280; }
+    .float-ticket .t2 { margin-top: 6px; font-size: 18px; font-weight: 900; }
+    .float-ticket .t3 { margin-top: 6px; font-size: 12px; color: #1677ff; font-weight: 800; }
+    @keyframes bob { 0%,100% { transform: rotate(8deg) translateY(0); } 50% { transform: rotate(8deg) translateY(-8px); } }
+  </style>
+</head>
+<body>
+  <div class="noise"></div>
+  <div class="page">
+    <section class="hero">
+      <div class="floating-orb orb-1"></div>
+      <div class="floating-orb orb-2"></div>
+      <div class="topbar">
+        <div class="brand">
+          <div class="brand-logo">账</div>
+          <div class="brand-name">AliLedger</div>
+        </div>
+        <div class="badge">AI拍照记账</div>
+      </div>
+
+      <div class="headline">
+        <div class="eyebrow">📸 你拍一张，剩下交给 AI</div>
+        <h1>记账这件事，<br><span class="gradient-text">终于不用手动了。</span></h1>
+        <div class="lead">
+          不想输入金额，不想选分类，不想写备注？那就别写。拍一张小票、支付截图或账单图片，AliLedger 自动识别金额、商户、时间和分类，秒级完成入账。
+        </div>
+        <div class="cta-row">
+          <button class="btn btn-primary" onclick="scrollToSection('core')">看看它怎么记</button>
+          <button class="btn btn-secondary" onclick="scrollToSection('compare')">和传统记账比比看</button>
+        </div>
+      </div>
+
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="screen">
+            <div class="island"></div>
+            <div class="mock-content">
+              <div class="mock-card hero-card">
+                <div class="mock-title">本月总支出</div>
+                <div class="mock-amount">¥ 1,428.50</div>
+                <div class="mini-stats">
+                  <div class="mini-cell"><div class="v">¥88</div><div class="k">今日支出</div></div>
+                  <div class="mini-cell"><div class="v">26</div><div class="k">本月笔数</div></div>
+                  <div class="mini-cell"><div class="v">¥55</div><div class="k">单笔均值</div></div>
+                </div>
+              </div>
+
+              <div class="mock-section">
+                <div class="section-head"><div class="t">自动识别结果</div><div class="chip">实时填充</div></div>
+                <div class="scan-card">
+                  <div class="scan-box">
+                    <div style="font-size:48px;">🧾</div>
+                    <div class="scan-line"></div>
+                  </div>
+                  <div class="ocr-result">
+                    <div class="ocr-item"><div class="k">金额</div><div class="v">¥32.00</div></div>
+                    <div class="ocr-item"><div class="k">分类</div><div class="v">餐饮</div></div>
+                    <div class="ocr-item"><div class="k">商户</div><div class="v">吉野家</div></div>
+                    <div class="ocr-item"><div class="k">时间</div><div class="v">22:31</div></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mock-section">
+                <div class="section-head"><div class="t">智能标签</div><div class="chip">少操作</div></div>
+                <div class="chips">
+                  <div class="chip">自动分类</div>
+                  <div class="chip">趋势统计</div>
+                  <div class="chip">预算提醒</div>
+                  <div class="chip">拍照即记</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="float-ticket">
+          <div class="t1">刚刚识别到一笔</div>
+          <div class="t2">¥32.00</div>
+          <div class="t3">吉野家 · 餐饮</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="core">
+      <h2>它不是一个"更复杂"的记账 App，<br>而是一个更省事的记账动作。</h2>
+      <p class="lead2">我们真正解决的，不是"记账能不能做"，而是"用户为什么不愿意做"。AliLedger 把原来多步输入的流程，压缩成一次拍照。</p>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-top">
+            <div class="feature-icon">📷</div>
+            <div class="feature-title">拍照就是入口</div>
+          </div>
+          <div class="feature-desc">打开相机、上传截图、选一张账单，任何一个动作都能开始记账。没有复杂表单，也不用先想"这笔钱到底算哪类"。</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-top">
+            <div class="feature-icon">🧠</div>
+            <div class="feature-title">AI看懂图片，而不只是识别文字</div>
+          </div>
+          <div class="feature-desc">它不仅提取"￥32"这种数字，还会结合上下文去判断商户、时间和消费类型，把一堆零散文本变成可用账单。</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-top">
+            <div class="feature-icon">⚡</div>
+            <div class="feature-title">确认一下，就入账完成</div>
+          </div>
+          <div class="feature-desc">AI自动填好金额、商户和分类，用户只做最后确认。把"输入型产品"变成"确认型产品"，记账阻力会小得多。</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>3步，比手动记账轻太多。</h2>
+      <p class="lead2">用户不喜欢复杂流程，所以我们把路径压缩到最短：拍、识别、确认。越短，越容易真的被用起来。</p>
+
+      <div class="receipt-flow">
+        <div class="flow-step">
+          <div class="flow-icon">1</div>
+          <div class="flow-main"><div class="flow-name">拍照 / 上传</div><div class="flow-desc">支持小票、支付截图、账单图片，拍完即进入识别链路。</div></div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-icon">2</div>
+          <div class="flow-main"><div class="flow-name">AI识别结构化信息</div><div class="flow-desc">自动抽取金额、商户、时间和分类，结果直出，不让用户手填。</div></div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-icon">3</div>
+          <div class="flow-main"><div class="flow-name">一键确认入账</div><div class="flow-desc">账单立刻进入列表和统计视图，首页数据同步更新。</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="compare">
+      <div class="compare">
+        <h3>传统记账 vs AliLedger</h3>
+        <div class="vs-row">
+          <div class="vs-card">
+            <div class="vs-label">传统方式</div>
+            <div class="vs-main">输入金额 → 选分类 → 写备注 → 再确认。流程长，用户越忙越不想记。</div>
+          </div>
+          <div class="vs-badge">VS</div>
+          <div class="vs-card">
+            <div class="vs-label">AliLedger</div>
+            <div class="vs-main">拍一张图 → AI自动识别 → 确认完成。少一步都是体验提升，少三步就是产品差异。</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="highlight-list">
+        <div class="highlight-item"><div class="dot"></div><div><strong>零输入感：</strong>用户不需要从头录一笔账，而是只需要确认结果。</div></div>
+        <div class="highlight-item"><div class="dot"></div><div><strong>高反馈感：</strong>今天花了多少、本月记了几笔、平均每笔多少钱，一眼就能看到。</div></div>
+        <div class="highlight-item"><div class="dot"></div><div><strong>低门槛养习惯：</strong>真正能帮用户养成记账习惯的，不是功能多，而是动作足够轻。</div></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>不只是记账，更是消费感知。</h2>
+      <p class="lead2">AliLedger 不是把一堆数字堆给你，而是把消费这件事变得"看得见"。你知道今天花了多少，也知道钱大多流向了哪里。</p>
+
+      <div class="quote-box">
+        <div class="big">"用户不是不想记账，<br>只是懒得操作。"</div>
+        <div class="sub">而我们的任务，就是把"操作成本"压到足够低。</div>
+      </div>
+    </section>
+
+    <section class="bottom-cta">
+      <button class="download" onclick="downloadIpa()">下载 iOS 安装包</button>
+      <div class="tiny">AliLedger · 让记账从手动输入，变成一次拍照</div>
+    </section>
+  </div>
+
+  <script>
+    function scrollToSection(id) {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function pulse(btn) {
+      btn.textContent = '这，就是更轻的记账方式';
+      btn.style.transform = 'scale(0.98)';
+      setTimeout(() => { btn.style.transform = 'scale(1)'; }, 180);
+    }
+
+    function downloadIpa() {
+      const ua = navigator.userAgent || "";
+      const isWechat = /MicroMessenger/i.test(ua);
+      const ipaUrl = "https://github.com/Cmzclh0404/AliLedger2-iOS/releases/download/v1.0.1/AliLedger2.ipa";
+
+      if (isWechat) {
+        alert("请点击右上角，在浏览器中打开后下载");
+        return;
+      }
+
+      window.location.href = ipaUrl;
+    }
+  </script>
+</body>
+</html>
